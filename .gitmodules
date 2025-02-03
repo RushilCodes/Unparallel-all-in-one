@@ -4,3 +4,7 @@
 [submodule "Superior Backend"]
 	path = Superior Backend
 	url = https://github.com/RushilCodes/Superior-Backend
+[submodule "Dashboard"]
+    path = Dashboard
+    url = https://github.com/RushilCodes/Dashboard
+
