@@ -9,7 +9,7 @@ This repository includes two submodules:
 Since this repo contains submodules, use the following command to clone it properly:
 
 ```bash
-git clone --recursive <repo-url>
+git clone --recursive https://github.com/RushilCodes/Unparallel-all-in-one
 ```
 
 If you've already cloned the repository without submodules, initialize and update them:
