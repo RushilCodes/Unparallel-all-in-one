@@ -6,3 +6,6 @@
 	url = https://github.com/RushilCodes/Superior-Backend
 
 
+[submodule "Dashboard"]
+	path = Dashboard
+	url = https://github.com/RushilCodes/Dashboard
