@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: RushilCodes/Unparallel-all-in-one  # Parent repository
-          token: ${{ secrets.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 }}
+          token: ${{ secrets.s }}
           submodules: 'recursive'
           fetch-depth: 0
 
