@@ -5,17 +5,17 @@ on:
     branches:
       - main
     paths:
-      - 'Auth/**'
-      - 'Superior Backend/**'
+      - 'Backend/**'
+      - 'Backend/Auth/**'
 
 jobs:
   update-submodules:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Main Repository
+      - name: Checkout with Nested Submodules
         uses: actions/checkout@v3
         with:
-          submodules: true
+          submodules: recursive
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Update Submodules
