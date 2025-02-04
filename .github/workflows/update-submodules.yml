@@ -5,8 +5,9 @@ on:
     branches:
       - main
     paths:
-      - 'Backend/**'
-      - 'Backend/Auth/**'
+      - 'Auth/**'
+      - 'Superior Backend/**'
+      - 'Dashboard/**'
 
 jobs:
   update-submodules:
@@ -17,8 +18,9 @@ jobs:
         with:
           submodules: recursive
           token: ${{ secrets.GITHUB_TOKEN }}
+          persist-credentials: true
 
-      - name: Update Submodules
+      - name: Update All Submodules
         run: |
           git submodule update --remote --merge
           git add .
