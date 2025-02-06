@@ -18,7 +18,8 @@ jobs:
 
       - name: Update All Submodules
         run: |
-          git submodule update --remote --merge
+          git submodule update --init --recursive
+          git submodule foreach --recursive git pull origin main --allow-unrelated-histories
           git add .
           git commit -m "Updated submodule references from unparallel-dev" || echo "No changes to commit"
           git push origin main
