@@ -7,3 +7,4 @@
 [submodule "Dashboard"]
 	path = Dashboard
 	url = https://github.com/RushilCodes/Dashboard
+	branch = main
