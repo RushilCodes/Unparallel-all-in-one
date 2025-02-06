@@ -16,13 +16,26 @@ jobs:
           token: ${{ secrets.PAT_TOKEN }}
           persist-credentials: true
 
+      - name: Configure Git Author
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"  # Ensure the commit has an identity
+
       - name: Update Submodules
         run: |
           echo "Updating all submodules..."
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
-          git submodule update --init --recursive
-          git add .
-          git commit -m "updating all submodules"
-          git push
+          git submodule update --init --recursive  # Initialize submodules and update them
+          
+          # Ensure submodules are up to date on their respective branches
+          git submodule foreach '
+            git checkout main || git checkout -b main;  # Checkout main branch if not already on it
+            git pull origin main;  # Pull latest changes from main branch
+          '
+          
+          # Check if there are any changes before committing
+          git diff --cached --quiet || git commit -m "Updating all submodules"  # Commit if changes exist
 
+      - name: Push Changes to Parent Repo
+        run: |
+          echo "Pushing changes to parent repo..."
+          git push origin main || echo "Push failed"
