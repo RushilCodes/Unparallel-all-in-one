@@ -15,12 +15,32 @@ jobs:
           submodules: recursive
           token: ${{ secrets.PAT_TOKEN }}
           persist-credentials: true
-      - name: Update All Submodules
-        run: |
-          git submodule update --init --recursive
-          git submodule foreach --recursive git fetch origin main
-          git submodule foreach --recursive git merge origin/main || true
-          git add .
-          git commit -m "Updated submodules" || echo "No changes to commit"
-          git push origin main
 
+      - name: Initialize and Update Submodules
+        run: |
+          echo "Initializing and updating submodules..."
+          git submodule update --init --recursive
+          git submodule status # Check the status of submodules
+
+      - name: Ensure Submodule is on Correct Branch
+        run: |
+          echo "Ensuring submodule is on the correct branch..."
+          git submodule foreach 'git checkout main || git checkout -b main'
+          git submodule foreach 'git pull origin main' # Fetch and update the submodule
+
+      - name: Fetch and Merge Submodules
+        run: |
+          echo "Fetching and merging submodules..."
+          git submodule foreach 'git fetch origin main; git merge origin/main || echo "Merge failed for $name"'
+
+      - name: Commit Submodule Changes
+        run: |
+          echo "Checking for submodule changes..."
+          git add .
+          git diff --cached # Debugging: Check what has changed
+          git commit -m "Updated submodules" || echo "No changes to commit"
+
+      - name: Push Changes
+        run: |
+          echo "Pushing changes to origin..."
+          git push origin main || echo "Push failed"
