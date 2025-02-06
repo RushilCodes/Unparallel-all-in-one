@@ -1,9 +1,11 @@
 [submodule "Auth"]
 	path = Auth
 	url = https://github.com/RushilCodes/Auth
+	branch = main
 [submodule "Superior Backend"]
 	path = Superior Backend
 	url = https://github.com/RushilCodes/Superior-Backend
+	branch = main
 [submodule "Dashboard"]
 	path = Dashboard
 	url = https://github.com/RushilCodes/Dashboard
