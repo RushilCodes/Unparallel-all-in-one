@@ -10,3 +10,6 @@
 	path = Dashboard
 	url = https://github.com/RushilCodes/Dashboard
 	branch = main
+[submodule "DevServer"]
+	path = DevServer
+	url = https://github.com/unparallel-dev/DevServer/
