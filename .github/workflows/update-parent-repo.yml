@@ -18,6 +18,10 @@ jobs:
       - name: Update Submodules
         run: |
           echo "Updating all submodules..."
+          git submodule update --init --recursive
+          git add .
+          git commit -m "updating all submodules"
+          git push
 
           # Loop through each submodule
           git submodule foreach '
