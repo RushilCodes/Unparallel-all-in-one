@@ -1,4 +1,4 @@
-name: Update Submodules
+name: Update Submodules in Child Repo
 
 on:
   workflow_dispatch:
@@ -9,38 +9,32 @@ jobs:
   update-submodules:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout with Nested Submodules
+      - name: Checkout the Parent Repo
         uses: actions/checkout@v3
         with:
-          submodules: recursive
-          token: ${{ secrets.PAT_TOKEN }}
+          submodules: recursive  # This ensures all submodules are checked out
           persist-credentials: true
 
-      - name: Initialize and Update Submodules
+      - name: Update Submodules
         run: |
-          echo "Initializing and updating submodules..."
-          git submodule update --init --recursive
-          git submodule status # Check the status of submodules
+          echo "Updating all submodules..."
 
-      - name: Ensure Submodule is on Correct Branch
-        run: |
-          echo "Ensuring submodule is on the correct branch..."
-          git submodule foreach 'git checkout main || git checkout -b main'
-          git submodule foreach 'git pull origin main' # Fetch and update the submodule
+          # Loop through each submodule
+          git submodule foreach '
+            echo "Fetching and updating $name...";
+            git fetch origin;
+            git checkout main || git checkout -b main;
+            git pull origin main || echo "Pull failed for $name";
+          '
 
-      - name: Fetch and Merge Submodules
+      - name: Update Submodule References in Parent Repo
         run: |
-          echo "Fetching and merging submodules..."
-          git submodule foreach 'git fetch origin main; git merge origin/main || echo "Merge failed for $name"'
+          echo "Updating submodule references in the parent repo..."
+          git add . # Add all changes (including submodule references)
+          git diff --cached # Show changes to the submodule references
+          git commit -m "Updated all submodules" || echo "No changes to commit"
 
-      - name: Commit Submodule Changes
+      - name: Push Changes to Parent Repo
         run: |
-          echo "Checking for submodule changes..."
-          git add .
-          git diff --cached # Debugging: Check what has changed
-          git commit -m "Updated submodules" || echo "No changes to commit"
-
-      - name: Push Changes
-        run: |
-          echo "Pushing changes to origin..."
+          echo "Pushing changes to parent repo..."
           git push origin main || echo "Push failed"
