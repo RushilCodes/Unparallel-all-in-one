@@ -1,41 +1,24 @@
-name: Update Parent Repository on Submodule Commit
+name: Update Submodules
 
 on:
-  push:
-    branches:
-      - main  # Replace with the branch name of the submodules
-    paths:
-      - 'Auth/**'  # Triggers on changes to the Auth submodule
-      - 'Superior Backend/**'  # Triggers on changes to the Superior Backend submodule
-      - 'Dashboard/**'  # Triggers on changes to the Dashboard submodule
+  workflow_dispatch:
+  repository_dispatch:
+    types: [external-push]
 
 jobs:
-  update-parent-repo:
+  update-submodules:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Parent Repository
+      - name: Checkout with Nested Submodules
         uses: actions/checkout@v3
         with:
-          repository: RushilCodes/Unparallel-all-in-one  # Parent repository
-          token: ${{ secrets.TOKEN }}
-          submodules: 'recursive'
-          fetch-depth: 0
+          submodules: recursive
+          token: ${{ secrets.GITHUB_TOKEN }}
+          persist-credentials: true
 
-      - name: Update Submodules
+      - name: Update All Submodules
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git submodule update --remote --merge
-
-          # Stage all submodule changes
-          git add Auth
-          git add "Superior Backend"
-          git add Dashboard
-
-          # Commit the changes
-          git commit -m "Update submodules to latest commits"
-
-      - name: Push Changes to Parent Repository
-        run: |
-          git push origin main  # Replace with the branch name of the parent repository
+          git add .
+          git commit -m "Updated submodule references from unparallel-dev" || echo "No changes to commit"
+          git push origin main
