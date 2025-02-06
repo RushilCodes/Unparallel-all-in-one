@@ -14,3 +14,6 @@
 	path = DevServer
 	url = https://github.com/unparallel-dev/DevServer
 	branch = main
+[submodule "VideoCall"]
+	path = VideoCall
+	url = https://github.com/unparallel-dev/VideoCall
