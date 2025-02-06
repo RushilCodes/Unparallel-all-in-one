@@ -12,4 +12,5 @@
 	branch = main
 [submodule "DevServer"]
 	path = DevServer
-	url = https://github.com/unparallel-dev/DevServer/
+	url = https://github.com/unparallel-dev/DevServer
+	branch = main

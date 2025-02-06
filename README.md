@@ -4,6 +4,10 @@
 This repository includes two submodules:
 - **Auth**: [https://github.com/RushilCodes/Auth](https://github.com/RushilCodes/Auth)
 - **Superior Backend**: [https://github.com/RushilCodes/Superior-Backend](https://github.com/RushilCodes/Superior-Backend)
+- **Dashboard**: [https://github.com/RushilCodes/Superior-Backend](https://github.com/RushilCodes/Superior-Backend)
+- **Devserver**: [https://github.com/RushilCodes/Superior-Backend](https://github.com/RushilCodes/Superior-Backend)
+- **Superior Backend**: [https://github.com/RushilCodes/Superior-Backend](https://github.com/RushilCodes/Superior-Backend)
+
 
 ## 📥 CLONING THE REPOSITORY
 Since this repo contains submodules, use the following command to clone it properly:
