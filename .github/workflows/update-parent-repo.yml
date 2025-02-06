@@ -13,32 +13,16 @@ jobs:
         uses: actions/checkout@v3
         with:
           submodules: recursive  # This ensures all submodules are checked out
+          token: ${{ secrets.PAT_TOKEN }}
           persist-credentials: true
 
       - name: Update Submodules
         run: |
           echo "Updating all submodules..."
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
           git submodule update --init --recursive
           git add .
           git commit -m "updating all submodules"
           git push
 
-          # Loop through each submodule
-          git submodule foreach '
-            echo "Fetching and updating $name...";
-            git fetch origin;
-            git checkout main || git checkout -b main;
-            git pull origin main || echo "Pull failed for $name";
-          '
-
-      - name: Update Submodule References in Parent Repo
-        run: |
-          echo "Updating submodule references in the parent repo..."
-          git add . # Add all changes (including submodule references)
-          git diff --cached # Show changes to the submodule references
-          git commit -m "Updated all submodules" || echo "No changes to commit"
-
-      - name: Push Changes to Parent Repo
-        run: |
-          echo "Pushing changes to parent repo..."
-          git push origin main || echo "Push failed"
